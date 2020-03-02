@@ -26,9 +26,9 @@ const actions = {
 
     loadHistory(context, data){
         let message = _.clone(messagesData[0]);
-        for (let i; i<10; i++){
-            message.id=1010+i;
-            message.date = 100000+i;
+        for (let i = 0; i < 10; i += 1){
+            message.id = 1010 + i;
+            message.date = 100000 + i;
             message.text = 'HISTORY MESSAGE';
 
         }
