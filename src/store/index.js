@@ -48,16 +48,13 @@ const actions = {
 const mutations = {
 
     addHistoryMessages(state, data) {
-        const lastMessage = _.clone(state.messages[0]);
-        const historyData = [lastMessage];
-        for (let i = 0; i < data.limit - 1; i += 1){
-            let message = _.clone(historyData[0]);
+        for (let i = 0; i < data.limit; i += 1){
+            const message = _.clone(state.messages[0]);
             message.id -= 1;
             message.date -= 1;
             message.text = 'HISTORY MESSAGE';
-            historyData.unshift(message);
+            state.messages.unshift(message);
         }
-        state.messages = historyData;
     },
 
     setMessages(state, data) {
