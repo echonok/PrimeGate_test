@@ -25,15 +25,7 @@ const getters = {
 const actions = {
 
     loadHistory(context, data){
-        let message = _.clone(messagesData[0]);
-        for (let i = 0; i < 10; i += 1){
-            message.id = 1010 + i;
-            message.date = 100000 + i;
-            message.text = 'HISTORY MESSAGE';
-
-        }
-        console.log('data.offset', data.offset);
-        console.log('data.limit', data.limit);
+        context.commit('addHistoryMessages', data);
     },
 
     loadMessage(context, id) {
@@ -56,7 +48,16 @@ const actions = {
 const mutations = {
 
     addHistoryMessages(state, data) {
-        console.log(state, data);
+        const lastMessage = _.clone(state.messages[0]);
+        const historyData = [lastMessage];
+        for (let i = 0; i < data.limit - 1; i += 1){
+            let message = _.clone(historyData[0]);
+            message.id -= 1;
+            message.date -= 1;
+            message.text = 'HISTORY MESSAGE';
+            historyData.unshift(message);
+        }
+        state.messages = historyData;
     },
 
     setMessages(state, data) {

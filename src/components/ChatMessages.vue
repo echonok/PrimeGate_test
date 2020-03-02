@@ -15,8 +15,7 @@
         components: {ChatMessage},
         data() {
             return {
-                id: null,
-                currentPosition: 0
+                id: null
             }
         },
         created () {
@@ -54,12 +53,11 @@
                 }
             },
             handleScroll (event) {
-                if (this.currentPosition > event.target.scrollTop) {
-                    const offset = this.currentPosition - event.target.scrollTop;
-                    const limit = event.target.scrollTop;
+                if (event.target.scrollTop < 10) {
+                    const offset = 10;
+                    const limit = 10;
                     this.loadHistory({ offset, limit });
                 }
-                this.currentPosition = event.target.scrollTop;
             }
         }
 
