@@ -16,7 +16,7 @@
         data() {
             return {
                 id: null,
-                currentPosition: 0
+                scrollSize: 0
             }
         },
         created () {
@@ -38,11 +38,11 @@
             ]),
         },
         watch: {
-            getCurrentChatMessages() {
-                this.$nextTick(() => {
-                    this.scrollToBottom()
-                });
-            }
+            // getCurrentChatMessages() {
+            //     this.$nextTick(() => {
+            //         this.scrollToBottom()
+            //     });
+            // }
         },
         methods: {
             ...mapActions(['setMessages', 'loadHistory']),
@@ -54,15 +54,18 @@
                 }
             },
             handleScroll (event) {
-                if (this.currentPosition > event.target.scrollTop) {
-                    const offset = this.currentPosition - event.target.scrollTop;
-                    const limit = event.target.scrollTop;
-                    this.loadHistory({ offset, limit });
+                let node = document.getElementById(this.$data.id);
+                if (this.scrollSize === 0) {
+                    this.scrollSize = node.scrollHeight;
                 }
-                this.currentPosition = event.target.scrollTop;
+                if (event.target.scrollTop < 100) {
+                    const offset = 10;
+                    const limit = 10;
+                    this.loadHistory({ offset, limit });
+                    node.scrollTop = this.scrollSize;
+                }
             }
         }
-
     }
 </script>
 
